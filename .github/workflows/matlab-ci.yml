@@ -1,0 +1,25 @@
+name: MATLAB CI
+
+on:
+  pull_request:
+    paths:
+      - "matlab/**"
+      - ".github/workflows/matlab-ci.yml"
+  push:
+    branches: [main]
+    paths:
+      - "matlab/**"
+      - ".github/workflows/matlab-ci.yml"
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: matlab-actions/setup-matlab@v3
+        with:
+          release: R2024b
+      - uses: matlab-actions/run-build@v3
+        with:
+          tasks: check test
+          startup-options: -sd matlab

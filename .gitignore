@@ -228,3 +228,8 @@ codegen/
 # Toolbox build output
 matlab/release/
 *.mltbx
+
+# MATLAB buildtool output
+matlab/.buildtool/
+matlab/test-results/
+matlab/code-coverage/
