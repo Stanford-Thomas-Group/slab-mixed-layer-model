@@ -24,8 +24,8 @@ This repository contains python and matlab implementations of the slab mixed lay
 
 - `"polar"` (default) — $\theta$ in radians, positive counterclockwise from the
   x-axis (East), pointing in the direction the wind blows *toward*.
-- `"bearing"` — compass bearing $\beta$, clockwise from North, giving the
-  direction the wind is coming *from*.
+- `"bearing"` — compass bearing $\beta$ in degrees, clockwise from North, giving
+  the direction the wind is coming *from*.
 
 $$ \theta = \frac{3\pi}{2} - \beta \pmod{2\pi} $$
 
@@ -51,22 +51,18 @@ $$ \frac{\mathrm{d} U}{\mathrm{d} t} - fV + rU = \frac{\tau_x}{\rho_0} $$
 
 $$ \frac{\mathrm{d} V}{\mathrm{d} t} + fU + rV = \frac{\tau_y}{\rho_0} $$
 
-### Complex formulation
+Let $W = U + \mathrm{i}V$ be the complex transport and $T = \rho_0^{-1}(\tau_x + \mathrm{i} \tau_y)$ the
+complex kinematic wind stress such that
 
-Let $W = U + \mathrm{i}V$, such that 
+$$ \frac{\mathrm{d} W}{\mathrm{d} t} + \mathrm{i} fW + rW = T. $$
 
-$$ \frac{\mathrm{d} W}{\mathrm{d} t} + \mathrm{i} fW + rW = \rho_0^{-1}(\tau_x + \mathrm{i} \tau_y) $$
+This is easily solved via an integrating factor:
 
-$$ \frac{\mathrm{d}~}{\mathrm{d} t}\left(W\mathrm{e}^{(r+\mathrm{i} f)t}\right) = \rho_0^{-1}(\tau_x + \mathrm{i} \tau_y)\mathrm{e}^{(r+\mathrm{i} f)t} $$
+$$ \frac{\mathrm{d}~}{\mathrm{d} t}\left(W\mathrm{e}^{(r+\mathrm{i} f)t}\right) = T(t)\,\mathrm{e}^{(r+\mathrm{i} f)t} $$
 
-### Exact solution
+and thus
 
-Expressing the wind stress in polar form,
-$\rho_0^{-1}(\tau_x + \mathrm{i} \tau_y) = \tilde{\tau} \mathrm{e}^{\mathrm{i} \theta}$:
+$$ W(t) = W_0\mathrm{e}^{-(r+\mathrm{i} f)(t - t_0)} + \mathrm{e}^{-(r+\mathrm{i} f)t} \int_{t_0}^t T(t')\,\mathrm{e}^{(r+\mathrm{i} f)t'}\,\mathrm{d}t'. $$
 
-$$ W = \mathrm{e}^{-(r+\mathrm{i} f)t} \int \tilde{\tau}(t)\mathrm{e}^{(r+\mathrm{i} f)t + \mathrm{i}\theta (t)}\mathrm{d}t $$
-
-$$ U = \mathrm{e}^{-rt}\cos(ft) \int \tilde{\tau}(t) \mathrm{e}^{rt}\cos(ft + \theta(t) )\mathrm{d}t + \mathrm{e}^{-r t}\sin(ft) \int \tilde{\tau}(t)\mathrm{e}^{rt}\sin(ft + \theta(t)) \mathrm{d}t $$
-
-$$ V = \mathrm{e}^{-rt}\cos(ft) \int \tilde{\tau}(t) \mathrm{e}^{rt}\sin(ft + \theta(t) )\mathrm{d}t - \mathrm{e}^{-r t}\sin(ft) \int \tilde{\tau}(t)\mathrm{e}^{rt}\cos(ft + \theta(t)) \mathrm{d}t $$
+This package assumes the boundary condition $W_0 = 0$ at $t_0$ where $t_0$ is the first time in the timeseries.
 
