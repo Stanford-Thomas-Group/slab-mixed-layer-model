@@ -5,7 +5,31 @@ This repository contains python and matlab implementations of the slab mixed lay
 
 ### Python
 
+Requires Python >=3.12. Not published to PyPI — install directly from GitHub:
+
+```bash
+pip install "slabmodel @ git+https://github.com/Stanford-Thomas-Group/slab-mixed-layer-model.git#subdirectory=python"
+```
+
+or with [uv](https://docs.astral.sh/uv/):
+
+```bash
+uv add "slabmodel @ git+https://github.com/Stanford-Thomas-Group/slab-mixed-layer-model.git#subdirectory=python"
+```
+
 ### Matlab
+
+Requires MATLAB R2024b or later. Clone the repository:
+
+```bash
+git clone https://github.com/Stanford-Thomas-Group/slab-mixed-layer-model.git
+```
+
+and add the `matlab` folder to your MATLAB path:
+
+```matlab
+addpath('/path/to/slab-mixed-layer-model/matlab')
+```
 
 
 ## Conventions
